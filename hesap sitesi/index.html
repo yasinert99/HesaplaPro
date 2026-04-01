@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HesaplaPro | Akademik Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="theme-toggle" onclick="temaDegistir()">🌙</button>
+
+    <div id="welcome-screen" class="hero-container">
+        <div class="animate-up text-center">
+            <h1 class="logo">Hesapla<span class="pro-text">Pro</span></h1>
+            <p class="subtitle">Hoş geldiniz, hangi hesaplama aracını kullanmak istersiniz?</p>
+            
+            <div class="menu-grid">
+                <div class="menu-card" onclick="araciAc('vize-final')">
+                    <span class="icon">🎓</span>
+                    <h3>Üniversite Not Hesaplama</h3>
+                    <p>Vize, Final ve Büt ortalaması</p>
+                </div>
+                <div class="menu-card" onclick="araciAc('dgs')">
+                    <span class="icon">📚</span>
+                    <h3>DGS Puanı</h3>
+                    <p>Dikey Geçiş Sınavı</p>
+                </div>
+                <div class="menu-card" onclick="araciAc('kpss')">
+                    <span class="icon">📝</span>
+                    <h3>KPSS Puanı</h3>
+                    <p>Lisans, ÖABT, Önlisans...</p>
+                </div>
+                <div class="menu-card" onclick="araciAc('pomem')">
+                    <span class="icon">👮</span>
+                    <h3>POMEM Puanı</h3>
+                    <p>Polis Meslek Eğitim Merkezi</p>
+                </div>
+                <div class="menu-card" onclick="araciAc('msu')">
+                    <span class="icon">🎖️</span>
+                    <h3>MSÜ Puanı</h3>
+                    <p>Milli Savunma Üniversitesi</p>
+                </div>
+                <div class="menu-card" onclick="araciAc('tyt')">
+                    <span class="icon">✍️</span>
+                    <h3>TYT - AYT Puanı</h3>
+                    <p>Yükseköğretim Kurumları</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-screen" class="container hidden">
+        <div class="app-header">
+            <button class="modern-back-btn" onclick="anaMenuyeDon()">
+                <span class="arrow">←</span> Ana Menü
+            </button>
+            <h2 id="arac-baslik" class="section-title">Hesaplama Aracı</h2>
+        </div>
+        
+        <div id="vize-final-area" class="tool-area">
+    <div class="calc-form">
+        <div class="input-section">
+            <div class="row-group">
+                <input type="text" id="ders-adi" placeholder="Ders Adı">
+            </div>
+            <div class="row-group grid-container">
+                <div class="input-pair">
+                    <input type="number" id="vize-not" placeholder="Vize Notu">
+                    <input type="number" id="vize-yuzde" placeholder="Vize %" value="40">
+                </div>
+                <div class="input-pair">
+                    <input type="number" id="final-not" placeholder="Final Notu">
+                    <input type="number" id="final-yuzde" placeholder="Final %" value="60">
+                </div>
+            </div>
+            <button class="primary-btn full-width" onclick="dersEkle()">Dersi Listeye Ekle</button>
+        </div>
+
+        <div class="transcript-view">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DERS</th>
+                        <th>VİZE</th>
+                        <th>FİNAL</th>
+                        <th>ORT.</th>
+                        <th>HARF</th>
+                        <th>İŞLEM</th>
+                    </tr>
+                </thead>
+                <tbody id="tablo-govde"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+       <div id="dgs-area" class="tool-area">
+    <div class="calc-form">
+        <div class="form-row header-row animate-up" style="background: var(--accent); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+            <div class="col-label font-bold" style="text-align: left; padding-left: 10px; color: var(--light-blue);">DERSLER</div>
+            <div class="col-input font-bold text-center">DOĞRU</div>
+            <div class="col-slash"></div>
+            <div class="col-input font-bold text-center">YANLIŞ</div>
+        </div>
+
+        <div class="form-row animate-up">
+            <div class="col-label">Sayısal (50 Soru)</div>
+            <div class="col-input"><input type="number" id="dgs-say-d" placeholder="0"></div>
+            <div class="col-slash">/</div>
+            <div class="col-input"><input type="number" id="dgs-say-y" placeholder="0"></div>
+        </div>
+
+        <div class="form-row animate-up">
+            <div class="col-label">Sözel (50 Soru)</div>
+            <div class="col-input"><input type="number" id="dgs-soz-d" placeholder="0"></div>
+            <div class="col-slash">/</div>
+            <div class="col-input"><input type="number" id="dgs-soz-y" placeholder="0"></div>
+        </div>
+
+        <div class="form-row obp-row animate-up">
+            <div class="col-label">Önlisans Başarı Puanı</div>
+            <div class="col-input-wide" style="flex: 1;">
+                <input type="number" id="dgs-obp" placeholder="Diploma Notu x 0.8 (Örn: 65.5)" style="width: 100%; text-align: left; padding-left: 15px;">
+            </div>
+        </div>
+
+        <div class="action-buttons animate-up">
+            <button class="btn-hesapla" onclick="hesaplaDGS()">Hesapla</button>
+            <button class="btn-temizle" onclick="dgsTemizle()">Temizle</button>
+        </div>
+
+        <div id="dgs-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div><div id="dgs-area" class="tool-area">
+    <div class="calc-form">
+        <div class="form-row header-row animate-up" style="background: var(--accent); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+            <div class="col-label font-bold" style="text-align: left; padding-left: 10px; color: var(--light-blue);">DERSLER</div>
+            <div class="col-input font-bold text-center">DOĞRU</div>
+            <div class="col-slash"></div>
+            <div class="col-input font-bold text-center">YANLIŞ</div>
+        </div>
+
+        <div class="form-row animate-up">
+            <div class="col-label">Sayısal (50 Soru)</div>
+            <div class="col-input"><input type="number" id="dgs-say-d" placeholder="0"></div>
+            <div class="col-slash">/</div>
+            <div class="col-input"><input type="number" id="dgs-say-y" placeholder="0"></div>
+        </div>
+
+        <div class="form-row animate-up">
+            <div class="col-label">Sözel (50 Soru)</div>
+            <div class="col-input"><input type="number" id="dgs-soz-d" placeholder="0"></div>
+            <div class="col-slash">/</div>
+            <div class="col-input"><input type="number" id="dgs-soz-y" placeholder="0"></div>
+        </div>
+
+        <div class="form-row obp-row animate-up">
+            <div class="col-label">Önlisans Başarı Puanı</div>
+            <div class="col-input-wide" style="flex: 1;">
+                <input type="number" id="dgs-obp" placeholder="Diploma Notu x 0.8 (Örn: 65.5)" style="width: 100%; text-align: left; padding-left: 15px;">
+            </div>
+        </div>
+
+        <div class="action-buttons animate-up">
+            <button class="btn-hesapla" onclick="hesaplaDGS()">Hesapla</button>
+            <button class="btn-temizle" onclick="dgsTemizle()">Temizle</button>
+        </div>
+
+        <div id="dgs-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div>
+
+        <div id="msu-area" class="tool-area hidden">
+    <div class="calc-form">
+        <p class="note-text"><span class="text-red font-bold">NOT:</span> Hiçbir soru yanıtlanmayan testler için doğru ve yanlış alanlarını boş bırakabilirsiniz. Ayrıca doğru sayısı kutucuklarına netleri yazarak da işlem yapabilirsiniz.</p>
+    
+        <div class="form-row header-row">
+            <div class="col-label"></div>
+            <div class="col-input text-center font-bold">Doğru</div>
+            <div class="col-slash">/</div>
+            <div class="col-input text-center font-bold">Yanlış</div>
+            <div class="col-info"></div>
+        </div>
+        <div class="form-row"><div class="col-label font-bold">Türkçe:</div><div class="col-input"><input type="number" id="msu-tr-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="msu-tr-y"></div><div class="col-info">40 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Sosyal Bilimler:</div><div class="col-input"><input type="number" id="msu-sos-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="msu-sos-y"></div><div class="col-info">20 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Temel Matematik:</div><div class="col-input"><input type="number" id="msu-mat-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="msu-mat-y"></div><div class="col-info">40 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Fen Bilimleri:</div><div class="col-input"><input type="number" id="msu-fen-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="msu-fen-y"></div><div class="col-info">20 Soru</div></div>
+
+        <div class="action-buttons">
+            <button class="btn-hesapla" onclick="hesaplaMSU()">Hesapla</button>
+            <button class="btn-temizle" onclick="msuTemizle()">Temizle</button>
+        </div>
+
+        <div id="msu-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div>
+
+        <div id="pomem-area" class="tool-area hidden">
+    <div class="calc-form">
+        <p class="note-text text-red">* Doldurulması zorunlu alanlar.</p>
+        <div class="form-row mt-4">
+            <div class="col-label font-bold text-red">* KPSS Puanı:</div>
+            <div class="col-input-wide"><input type="number" id="pomem-kpss"></div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="col-label font-bold text-red">* Fiziki Yeterlilik P.:</div>
+            <div class="col-input-wide"><input type="number" id="pomem-fiziki"></div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="col-label font-bold text-red">* Mülakat Puanı:</div>
+            <div class="col-input-wide"><input type="number" id="pomem-mulakat"></div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn-hesapla" onclick="hesaplaPOMEM()">Hesapla</button>
+            <button class="btn-temizle" onclick="pomemTemizle()">Sıfırla</button>
+        </div>
+
+        <div id="pomem-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div>
+
+        <div id="tyt-area" class="tool-area hidden">
+    <div class="calc-form">
+        <p class="note-text"><span class="text-red font-bold">NOT:</span> Yanlış sayılarını boş bırakıp, doğru sayısı kutucuklarına netleri yazarak da hesaplama yapabilirsiniz.</p>
+    
+        <div class="form-row header-row">
+            <div class="col-label"></div>
+            <div class="col-input text-center font-bold" style="font-size: 0.85rem; color: var(--text); opacity: 0.8;">Doğru</div>
+            <div class="col-slash">/</div>
+            <div class="col-input text-center font-bold" style="font-size: 0.85rem; color: var(--text); opacity: 0.8;">Yanlış</div>
+            <div class="col-info"></div>
+        </div>
+
+        <div class="form-row"><div class="col-label font-bold">Türkçe:</div><div class="col-input"><input type="number" id="tyt-tr-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="tyt-tr-y"></div><div class="col-info">40 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Sosyal Bilimler:</div><div class="col-input"><input type="number" id="tyt-sos-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="tyt-sos-y"></div><div class="col-info">20 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Temel Matematik:</div><div class="col-input"><input type="number" id="tyt-mat-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="tyt-mat-y"></div><div class="col-info">40 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold">Fen Bilimleri:</div><div class="col-input"><input type="number" id="tyt-fen-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="tyt-fen-y"></div><div class="col-info">20 Soru</div></div>
+
+        <div class="form-row mt-4" style="border-top: 1px dashed var(--border); padding-top: 15px;">
+            <div class="col-label font-bold text-light-blue">Diploma Notu (0-100):</div>
+            <div class="col-input-wide"><input type="number" id="tyt-obp" placeholder="Örn: 85"></div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-hesapla" onclick="hesaplaTYT()">Hesapla</button>
+            <button class="btn-temizle" onclick="tytTemizle()">Temizle</button>
+        </div>
+
+        <div id="tyt-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div>
+
+        <div id="kpss-area" class="tool-area hidden">
+    <div class="calc-form">
+        <div class="form-row mt-4">
+            <div class="col-label font-bold text-red">* Puan Türü:</div>
+            <div class="col-radio-group">
+                <label><input type="radio" name="kpss" id="kpss-lisans" onclick="kpssAlanGoster(true)" checked> Lisans (P1 - P48)</label>
+                <label><input type="radio" name="kpss" id="kpss-onlisans" onclick="kpssAlanGoster(false)"> Önlisans (P93)</label>
+            </div>
+        </div>
+
+        <div class="form-row header-row">
+    <div class="col-label"></div> <div class="col-input-header">
+        <span>Doğru</span>
+        <span class="header-divider">/</span>
+        <span>Yanlış</span>
+       </div>
+     </div>
+        
+        <div class="form-row"><div class="col-label font-bold text-red">* Genel Yetenek:</div><div class="col-input"><input type="number" id="kpss-gy-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="kpss-gy-y"></div><div class="col-info">60 Soru</div></div>
+        <div class="form-row"><div class="col-label font-bold text-red">* Genel Kültür:</div><div class="col-input"><input type="number" id="kpss-gk-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="kpss-gk-y"></div><div class="col-info">60 Soru</div></div>
+
+        <div id="kpss-lisans-alanlari">
+            <div class="form-row"><div class="col-label font-bold">Hukuk:</div><div class="col-input"><input type="number" id="kpss-hukuk-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="kpss-hukuk-y"></div><div class="col-info">40 Soru</div></div>
+            <div class="form-row"><div class="col-label font-bold">İktisat:</div><div class="col-input"><input type="number" id="kpss-iktisat-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="kpss-iktisat-y"></div><div class="col-info">40 Soru</div></div>
+            <div class="form-row"><div class="col-label font-bold">Uluslararası İlişkiler:</div><div class="col-input"><input type="number" id="kpss-ulus-d"></div><div class="col-slash">/</div><div class="col-input"><input type="number" id="kpss-ulus-y"></div><div class="col-info">40 Soru</div></div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-hesapla" onclick="hesaplaKPSS()">Hesapla</button>
+            <button class="btn-temizle" onclick="kpssTemizle()">Sıfırla</button>
+        </div>
+
+        <div id="kpss-sonuc-konteynir" class="result-box hidden"></div>
+    </div>
+</div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
